@@ -17,3 +17,4 @@ class ImageResizeDialog(QDialog):
 
     def get_height(self):
         return self.ui.HeightBox.value()
+    

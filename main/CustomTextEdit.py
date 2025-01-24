@@ -1,6 +1,6 @@
 from PySide6.QtWidgets import *
 from PySide6.QtGui import QAction
-from ImageHandler import ImageResizeDialog
+from imageHandler import ImageResizeDialog
 
 class CustomTextEdit(QTextEdit):
     def __init__(self, *args, **kwargs):
@@ -18,8 +18,10 @@ class CustomTextEdit(QTextEdit):
         if not self.format.isImageFormat() or self.cursor.selectionStart() == self.cursor.selectionEnd():
             ImageSizeOption.setDisabled(True)
 
+        # TODO: Доделать это дерьмо!!!
         InsertLinkOption = QAction("Вставить ссылку", self)
         InsertLinkOption.triggered.connect(self.InsertLink)
+        InsertLinkOption.setDisabled(True)
 
         # Добавляем их в меню
         menu.addSeparator()  # Разделитель между стандартными и новыми опциями

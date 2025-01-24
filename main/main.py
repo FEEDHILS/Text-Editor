@@ -4,7 +4,7 @@ from PySide6.QtWidgets import *
 from views.ui_main import Ui_MainWindow 
 from textFormatting import *
 from textFont import *
-from ImageHandler import *
+from imageHandler import *
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -21,6 +21,8 @@ class MainWindow(QMainWindow):
                                                                       self.ui.FontBox))
         self.ui.FontSize.valueChanged.connect(lambda: setSize(self.ui.textEdit, 
                                                               self.ui.FontSize.value()))
+        
+        self.ui.ImageButton.clicked.connect( self.loadImage )
         # self.ui.textEdit.cursorPositionChanged.connect(lambda: fontSizeUpdate(self.ui.textEdit,
         #                                                                  self.ui.FontSize))
         # self.ui.textEdit.cursorPositionChanged.connect(lambda: CursorPositionChanged(self.ui.textEdit))
@@ -30,7 +32,13 @@ class MainWindow(QMainWindow):
         # image_format.setWidth(128)
         # image_format.setHeight(128)
         # cursor.insertImage(image_format)
-    
+    def loadImage(self):
+        file, _ = QFileDialog.getOpenFileName(self, "Select Image", '', "Images (*.png *.jpg *.bmp *.svg)")
+        if file:
+            image_format = QTextImageFormat()
+            image_format.setName(file)
+            self.ui.textEdit.textCursor().insertImage(image_format)
+
     def resizeEvent(self, event):
         super().resizeEvent(event)
 
