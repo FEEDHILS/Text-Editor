@@ -1,5 +1,5 @@
 from PySide6.QtWidgets import QFontComboBox
-from PySide6.QtGui import QTextCursor, QTextCharFormat
+from PySide6.QtGui import QTextCursor, QTextCharFormat, QTextImageFormat
 
 def changeFont(textEdit, fontBox):
     cursor = textEdit.textCursor()

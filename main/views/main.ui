@@ -70,7 +70,7 @@
        </property>
        <layout class="QGridLayout" name="gridLayout_2">
         <item row="0" column="0">
-         <widget class="QTextEdit" name="textEdit">
+         <widget class="CustomTextEdit" name="textEdit">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
             <horstretch>0</horstretch>
@@ -248,6 +248,13 @@ li.checked::marker { content: &quot;\2612&quot;; }
    </property>
   </action>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>CustomTextEdit</class>
+   <extends>QTextEdit</extends>
+   <header>customtextedit.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

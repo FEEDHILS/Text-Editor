@@ -22,6 +22,8 @@ from PySide6.QtWidgets import (QAbstractScrollArea, QAbstractSpinBox, QApplicati
     QScrollArea, QSizePolicy, QSpacerItem, QSpinBox,
     QStatusBar, QTextEdit, QWidget)
 
+from CustomTextEdit import CustomTextEdit
+
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
@@ -60,7 +62,7 @@ class Ui_MainWindow(object):
         self.DocumentContent.setSizePolicy(sizePolicy1)
         self.gridLayout_2 = QGridLayout(self.DocumentContent)
         self.gridLayout_2.setObjectName(u"gridLayout_2")
-        self.textEdit = QTextEdit(self.DocumentContent)
+        self.textEdit = CustomTextEdit(self.DocumentContent)
         self.textEdit.setObjectName(u"textEdit")
         sizePolicy2 = QSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
         sizePolicy2.setHorizontalStretch(0)

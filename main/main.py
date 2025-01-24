@@ -4,12 +4,14 @@ from PySide6.QtWidgets import *
 from views.ui_main import Ui_MainWindow 
 from textFormatting import *
 from textFont import *
+from ImageHandler import *
 
 class MainWindow(QMainWindow):
     def __init__(self):
         super(MainWindow, self).__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+
         setSize(self.ui.textEdit, 12)
         # Всякие коннекты к функциям
         self.ui.BoldStyleButton.clicked.connect(lambda: setBold(self.ui.textEdit))
@@ -21,6 +23,13 @@ class MainWindow(QMainWindow):
                                                               self.ui.FontSize.value()))
         # self.ui.textEdit.cursorPositionChanged.connect(lambda: fontSizeUpdate(self.ui.textEdit,
         #                                                                  self.ui.FontSize))
+        # self.ui.textEdit.cursorPositionChanged.connect(lambda: CursorPositionChanged(self.ui.textEdit))
+        # cursor = self.ui.textEdit.textCursor()
+        # image_format = QTextImageFormat()
+        # image_format.setName("sosaker.jpg")
+        # image_format.setWidth(128)
+        # image_format.setHeight(128)
+        # cursor.insertImage(image_format)
     
     def resizeEvent(self, event):
         super().resizeEvent(event)
