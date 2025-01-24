@@ -3,17 +3,25 @@ from PySide6 import QtCore
 from PySide6.QtWidgets import *
 from views.ui_main import Ui_MainWindow 
 from textFormatting import *
+from textFont import *
 
 class MainWindow(QMainWindow):
     def __init__(self):
         super(MainWindow, self).__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+        setSize(self.ui.textEdit, 12)
         # Всякие коннекты к функциям
         self.ui.BoldStyleButton.clicked.connect(lambda: setBold(self.ui.textEdit))
         self.ui.ItalicStyleButton.clicked.connect(lambda: setItalic(self.ui.textEdit))
         self.ui.UnderlineStyleButton.clicked.connect(lambda: setUnderlined(self.ui.textEdit))
-
+        self.ui.FontBox.currentFontChanged.connect(lambda: changeFont(self.ui.textEdit, 
+                                                                      self.ui.FontBox))
+        self.ui.FontSize.valueChanged.connect(lambda: setSize(self.ui.textEdit, 
+                                                              self.ui.FontSize.value()))
+        # self.ui.textEdit.cursorPositionChanged.connect(lambda: fontSizeUpdate(self.ui.textEdit,
+        #                                                                  self.ui.FontSize))
+    
     def resizeEvent(self, event):
         super().resizeEvent(event)
 

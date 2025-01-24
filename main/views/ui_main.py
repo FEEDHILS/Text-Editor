@@ -16,9 +16,10 @@ from PySide6.QtGui import (QAction, QBrush, QColor, QConicalGradient,
     QIcon, QImage, QKeySequence, QLinearGradient,
     QPainter, QPalette, QPixmap, QRadialGradient,
     QTransform)
-from PySide6.QtWidgets import (QAbstractScrollArea, QApplication, QFrame, QGridLayout,
-    QHBoxLayout, QLayout, QMainWindow, QMenu,
-    QMenuBar, QPushButton, QScrollArea, QSizePolicy,
+from PySide6.QtWidgets import (QAbstractScrollArea, QAbstractSpinBox, QApplication, QFontComboBox,
+    QFrame, QGridLayout, QHBoxLayout, QLayout,
+    QMainWindow, QMenu, QMenuBar, QPushButton,
+    QScrollArea, QSizePolicy, QSpacerItem, QSpinBox,
     QStatusBar, QTextEdit, QWidget)
 
 class Ui_MainWindow(object):
@@ -54,7 +55,7 @@ class Ui_MainWindow(object):
         self.DocumentArea.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.DocumentContent = QWidget()
         self.DocumentContent.setObjectName(u"DocumentContent")
-        self.DocumentContent.setGeometry(QRect(0, 0, 1016, 1153))
+        self.DocumentContent.setGeometry(QRect(0, -526, 1016, 1153))
         sizePolicy1.setHeightForWidth(self.DocumentContent.sizePolicy().hasHeightForWidth())
         self.DocumentContent.setSizePolicy(sizePolicy1)
         self.gridLayout_2 = QGridLayout(self.DocumentContent)
@@ -66,11 +67,12 @@ class Ui_MainWindow(object):
         sizePolicy2.setVerticalStretch(0)
         sizePolicy2.setHeightForWidth(self.textEdit.sizePolicy().hasHeightForWidth())
         self.textEdit.setSizePolicy(sizePolicy2)
-        self.textEdit.setMinimumSize(QSize(800, 1131))
+        self.textEdit.setMinimumSize(QSize(802, 1131))
         font = QFont()
         font.setFamilies([u"Times New Roman"])
         font.setPointSize(12)
         self.textEdit.setFont(font)
+        self.textEdit.setStyleSheet(u"border: 1px solid")
         self.textEdit.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.textEdit.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAsNeeded)
         self.textEdit.setSizeAdjustPolicy(QAbstractScrollArea.SizeAdjustPolicy.AdjustIgnored)
@@ -83,38 +85,64 @@ class Ui_MainWindow(object):
 
         self.gridLayout.addWidget(self.DocumentArea, 1, 0, 1, 1)
 
-        self.gridLayout_4 = QGridLayout()
-        self.gridLayout_4.setObjectName(u"gridLayout_4")
-        self.horizontalLayout = QHBoxLayout()
-        self.horizontalLayout.setSpacing(10)
-        self.horizontalLayout.setObjectName(u"horizontalLayout")
-        self.horizontalLayout.setSizeConstraint(QLayout.SizeConstraint.SetDefaultConstraint)
+        self.ToolPanel = QGridLayout()
+        self.ToolPanel.setObjectName(u"ToolPanel")
+        self.TextFormatLayout = QHBoxLayout()
+        self.TextFormatLayout.setSpacing(10)
+        self.TextFormatLayout.setObjectName(u"TextFormatLayout")
+        self.TextFormatLayout.setSizeConstraint(QLayout.SizeConstraint.SetDefaultConstraint)
         self.BoldStyleButton = QPushButton(self.MainArea)
         self.BoldStyleButton.setObjectName(u"BoldStyleButton")
         icon = QIcon(QIcon.fromTheme(QIcon.ThemeIcon.FormatTextBold))
         self.BoldStyleButton.setIcon(icon)
 
-        self.horizontalLayout.addWidget(self.BoldStyleButton)
+        self.TextFormatLayout.addWidget(self.BoldStyleButton)
 
         self.ItalicStyleButton = QPushButton(self.MainArea)
         self.ItalicStyleButton.setObjectName(u"ItalicStyleButton")
         icon1 = QIcon(QIcon.fromTheme(QIcon.ThemeIcon.FormatTextItalic))
         self.ItalicStyleButton.setIcon(icon1)
 
-        self.horizontalLayout.addWidget(self.ItalicStyleButton)
+        self.TextFormatLayout.addWidget(self.ItalicStyleButton)
 
         self.UnderlineStyleButton = QPushButton(self.MainArea)
         self.UnderlineStyleButton.setObjectName(u"UnderlineStyleButton")
         icon2 = QIcon(QIcon.fromTheme(QIcon.ThemeIcon.FormatTextUnderline))
         self.UnderlineStyleButton.setIcon(icon2)
 
-        self.horizontalLayout.addWidget(self.UnderlineStyleButton)
+        self.TextFormatLayout.addWidget(self.UnderlineStyleButton)
 
 
-        self.gridLayout_4.addLayout(self.horizontalLayout, 0, 2, 1, 1)
+        self.ToolPanel.addLayout(self.TextFormatLayout, 1, 2, 1, 1)
+
+        self.FontLayout = QHBoxLayout()
+        self.FontLayout.setObjectName(u"FontLayout")
+        self.FontBox = QFontComboBox(self.MainArea)
+        self.FontBox.setObjectName(u"FontBox")
+        self.FontBox.setWritingSystem(QFontDatabase.WritingSystem.Latin)
+        self.FontBox.setFontFilters(QFontComboBox.FontFilter.ScalableFonts)
+        self.FontBox.setCurrentFont(font)
+
+        self.FontLayout.addWidget(self.FontBox)
+
+        self.FontSize = QSpinBox(self.MainArea)
+        self.FontSize.setObjectName(u"FontSize")
+        self.FontSize.setButtonSymbols(QAbstractSpinBox.ButtonSymbols.UpDownArrows)
+        self.FontSize.setMinimum(1)
+        self.FontSize.setMaximum(128)
+        self.FontSize.setValue(12)
+
+        self.FontLayout.addWidget(self.FontSize)
 
 
-        self.gridLayout.addLayout(self.gridLayout_4, 0, 0, 1, 1)
+        self.ToolPanel.addLayout(self.FontLayout, 1, 0, 1, 1)
+
+        self.horizontalSpacer = QSpacerItem(500, 20, QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Minimum)
+
+        self.ToolPanel.addItem(self.horizontalSpacer, 1, 1, 1, 1)
+
+
+        self.gridLayout.addLayout(self.ToolPanel, 0, 0, 1, 1)
 
         MainWindow.setCentralWidget(self.MainArea)
         self.menubar = QMenuBar(MainWindow)
@@ -137,7 +165,7 @@ class Ui_MainWindow(object):
     # setupUi
 
     def retranslateUi(self, MainWindow):
-        MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"\u0421\u043b\u043e\u0432\u043e 2025", None))
+        MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"FEFU \u0421\u043b\u043e\u0432\u043e 2025", None))
         self.action.setText(QCoreApplication.translate("MainWindow", u"\u0421\u043e\u0437\u0434\u0430\u0442\u044c \u043d\u043e\u0432\u044b\u0439 \u0424\u0430\u0439\u043b", None))
         self.textEdit.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
