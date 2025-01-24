@@ -17,8 +17,9 @@ from PySide6.QtGui import (QAction, QBrush, QColor, QConicalGradient,
     QPainter, QPalette, QPixmap, QRadialGradient,
     QTransform)
 from PySide6.QtWidgets import (QAbstractScrollArea, QApplication, QFrame, QGridLayout,
-    QMainWindow, QMenu, QMenuBar, QScrollArea,
-    QSizePolicy, QStatusBar, QTextEdit, QWidget)
+    QHBoxLayout, QLayout, QMainWindow, QMenu,
+    QMenuBar, QPushButton, QScrollArea, QSizePolicy,
+    QStatusBar, QTextEdit, QWidget)
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -80,7 +81,40 @@ class Ui_MainWindow(object):
 
         self.DocumentArea.setWidget(self.DocumentContent)
 
-        self.gridLayout.addWidget(self.DocumentArea, 0, 0, 1, 1)
+        self.gridLayout.addWidget(self.DocumentArea, 1, 0, 1, 1)
+
+        self.gridLayout_4 = QGridLayout()
+        self.gridLayout_4.setObjectName(u"gridLayout_4")
+        self.horizontalLayout = QHBoxLayout()
+        self.horizontalLayout.setSpacing(10)
+        self.horizontalLayout.setObjectName(u"horizontalLayout")
+        self.horizontalLayout.setSizeConstraint(QLayout.SizeConstraint.SetDefaultConstraint)
+        self.BoldStyleButton = QPushButton(self.MainArea)
+        self.BoldStyleButton.setObjectName(u"BoldStyleButton")
+        icon = QIcon(QIcon.fromTheme(QIcon.ThemeIcon.FormatTextBold))
+        self.BoldStyleButton.setIcon(icon)
+
+        self.horizontalLayout.addWidget(self.BoldStyleButton)
+
+        self.ItalicStyleButton = QPushButton(self.MainArea)
+        self.ItalicStyleButton.setObjectName(u"ItalicStyleButton")
+        icon1 = QIcon(QIcon.fromTheme(QIcon.ThemeIcon.FormatTextItalic))
+        self.ItalicStyleButton.setIcon(icon1)
+
+        self.horizontalLayout.addWidget(self.ItalicStyleButton)
+
+        self.UnderlineStyleButton = QPushButton(self.MainArea)
+        self.UnderlineStyleButton.setObjectName(u"UnderlineStyleButton")
+        icon2 = QIcon(QIcon.fromTheme(QIcon.ThemeIcon.FormatTextUnderline))
+        self.UnderlineStyleButton.setIcon(icon2)
+
+        self.horizontalLayout.addWidget(self.UnderlineStyleButton)
+
+
+        self.gridLayout_4.addLayout(self.horizontalLayout, 0, 2, 1, 1)
+
+
+        self.gridLayout.addLayout(self.gridLayout_4, 0, 0, 1, 1)
 
         MainWindow.setCentralWidget(self.MainArea)
         self.menubar = QMenuBar(MainWindow)
@@ -112,7 +146,10 @@ class Ui_MainWindow(object):
 "li.unchecked::marker { content: \"\\2610\"; }\n"
 "li.checked::marker { content: \"\\2612\"; }\n"
 "</style></head><body style=\" font-family:'Times New Roman'; font-size:12pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Segoe UI'; font-size:9pt;\"><br /></p></body></html>", None))
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", None))
+        self.BoldStyleButton.setText("")
+        self.ItalicStyleButton.setText("")
+        self.UnderlineStyleButton.setText("")
         self.menuTest.setTitle(QCoreApplication.translate("MainWindow", u"\u0424\u0430\u0439\u043b", None))
     # retranslateUi
 
