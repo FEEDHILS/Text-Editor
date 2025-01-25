@@ -12,12 +12,16 @@ class MainWindow(QMainWindow):
         super(MainWindow, self).__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+        # Настройка TextEdit
+        self.ui.textEdit.setPlaceholderText("Здесь пустовато...")
+        setSize(self.ui.textEdit, self.ui.FontSize.value())
+        changeFont(self.ui.textEdit, self.ui.FontBox)
 
-        setSize(self.ui.textEdit, 12)
         # Всякие коннекты к функциям
         self.ui.BoldStyleButton.clicked.connect(lambda: setBold(self.ui.textEdit))
         self.ui.ItalicStyleButton.clicked.connect(lambda: setItalic(self.ui.textEdit))
         self.ui.UnderlineStyleButton.clicked.connect(lambda: setUnderlined(self.ui.textEdit))
+        self.ui.clearButton.clicked.connect(lambda: clearStyles(self.ui.textEdit))
         self.ui.FontBox.currentFontChanged.connect(lambda: changeFont(self.ui.textEdit, 
                                                                       self.ui.FontBox))
         self.ui.FontSize.valueChanged.connect(lambda: setSize(self.ui.textEdit, 
@@ -32,17 +36,15 @@ class MainWindow(QMainWindow):
         self.ui.ChangeBack.clicked.connect(lambda: change_background_color(self.ui.textEdit))
         self.ui.ChangeMargin.clicked.connect(lambda: set_margin(self.ui.textEdit))
         self.ui.LineSpace.clicked.connect(lambda: set_line_spacing(self.ui.textEdit))
+        self.ui.LinkButton.clicked.connect(lambda: setLink(self.ui.textEdit))
 
-
-        # self.ui.textEdit.cursorPositionChanged.connect(lambda: fontSizeUpdate(self.ui.textEdit,
-        #                                                                  self.ui.FontSize))
-        # self.ui.textEdit.cursorPositionChanged.connect(lambda: CursorPositionChanged(self.ui.textEdit))
+        self.ui.imageAction.triggered.connect( self.loadImage )
+        self.ui.linkAction.triggered.connect(lambda: setLink(self.ui.textEdit))
         # cursor = self.ui.textEdit.textCursor()
-        # image_format = QTextImageFormat()
-        # image_format.setName("sosaker.jpg")
-        # image_format.setWidth(128)
-        # image_format.setHeight(128)
-        # cursor.insertImage(image_format)
+        # cursor.setCharFormat(previousFormat)
+        # self.ui.textEdit.setTextCursor( cursor )
+
+
     def loadImage(self):
         file, _ = QFileDialog.getOpenFileName(self, "Select Image", '', "Images (*.png *.jpg *.bmp *.svg)")
         if file:

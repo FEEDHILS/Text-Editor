@@ -1,4 +1,4 @@
-from PySide6.QtGui import QTextCursor, QTextBlockFormat
+from PySide6.QtGui import QTextCursor, QTextBlockFormat, QTextCharFormat
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import *
 
@@ -55,7 +55,7 @@ def set_margin(textEdit):
             0,  # Минимальное значение
             100  # Максимальное значение
         )
-        
+
         if ok_value:
             cursor = textEdit.textCursor()
             block_format = cursor.blockFormat()
@@ -90,27 +90,56 @@ def set_line_spacing(textEdit):
         textEdit.setTextCursor(cursor)
 
 
-
-
-
-
-
-
-
-
 def setBold(textEdit):
     cursor = textEdit.textCursor()
     selectionStart = cursor.selectionStart()
     selectionEnd = cursor.selectionEnd()
+
+    cursor.setPosition(selectionStart)
+    cursor.setPosition(selectionEnd, QTextCursor.MoveMode.KeepAnchor)
+    textEdit.setTextCursor(cursor)
 
     # Создаем новый формат
     newFormat = cursor.charFormat()
     newFormat.setFontWeight(700 if newFormat.fontWeight() != 700 else 400)
 
     # Применяем формат ко всему выделенному диапазону
+    cursor.mergeCharFormat(newFormat)
+    
+
+
+def setLink(textEdit):
+    cursor = textEdit.textCursor()
+    selectionStart = cursor.selectionStart()
+    selectionEnd = cursor.selectionEnd()
+
     cursor.setPosition(selectionStart)
     cursor.setPosition(selectionEnd, QTextCursor.MoveMode.KeepAnchor)
-    cursor.mergeCharFormat(newFormat)
+    textEdit.setTextCursor(cursor)
+
+    # Узнаем ссылку от пользователя
+    text, ok = QInputDialog.getText(textEdit, "Вставить ссылку", "Введите Ссылку:")
+    if not ok:
+        return
+
+    # Создаем новый формат
+    oldFormat = cursor.charFormat()
+    newFormat = cursor.charFormat()
+
+    newFormat.setAnchor(True)
+    newFormat.setAnchorHref(text)
+    newFormat.setForeground(Qt.blue)
+    newFormat.setFontUnderline(True)
+    if cursor.hasSelection():
+        # Применяем формат ко всему выделенному диапазону
+        cursor.setCharFormat(newFormat)
+        cursor.clearSelection()
+        textEdit.setTextCursor(cursor)
+    else:
+        cursor.insertText(text, newFormat)
+
+    # Сбрасываем стиль на тот что был до этого
+    cursor.setCharFormat( oldFormat )
     textEdit.setTextCursor(cursor)
     
 
@@ -119,23 +148,44 @@ def setItalic(textEdit):
     selectionStart = cursor.selectionStart()
     selectionEnd = cursor.selectionEnd()
 
+    cursor.setPosition(selectionStart)
+    cursor.setPosition(selectionEnd, QTextCursor.MoveMode.KeepAnchor)
+    textEdit.setTextCursor(cursor)
+
     newFormat = cursor.charFormat()
     newFormat.setFontItalic( not newFormat.fontItalic() )
 
-    cursor.setPosition(selectionStart)
-    cursor.setPosition(selectionEnd, QTextCursor.MoveMode.KeepAnchor)
-    cursor.mergeCharFormat(newFormat)
-    textEdit.setTextCursor(cursor)
+    cursor.setCharFormat(newFormat)
 
 def setUnderlined(textEdit):
     cursor = textEdit.textCursor()
     selectionStart = cursor.selectionStart()
     selectionEnd = cursor.selectionEnd()
 
+    cursor.setPosition(selectionStart)
+    cursor.setPosition(selectionEnd, QTextCursor.MoveMode.KeepAnchor)
+    textEdit.setTextCursor(cursor)
+
     newFormat = cursor.charFormat()
     newFormat.setFontUnderline( not newFormat.fontUnderline() )
 
+
+    cursor.mergeCharFormat(newFormat)
+
+def clearStyles(textEdit):
+    cursor = textEdit.textCursor()
+    selectionStart = cursor.selectionStart()
+    selectionEnd = cursor.selectionEnd()
+
     cursor.setPosition(selectionStart)
     cursor.setPosition(selectionEnd, QTextCursor.MoveMode.KeepAnchor)
-    cursor.mergeCharFormat(newFormat)
     textEdit.setTextCursor(cursor)
+
+    # Создаём чистый формат без стилей
+    currentFormat = cursor.charFormat()
+    clearFormat = QTextCharFormat()
+    clearFormat.setFontFamilies( currentFormat.fontFamilies() )
+    clearFormat.setFontPointSize( currentFormat.fontPointSize() )
+    cursor.setCharFormat(clearFormat)  # Сбрасываем форматирование
+
+    # textEdit.setTextCursor(cursor)

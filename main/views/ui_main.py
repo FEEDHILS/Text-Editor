@@ -22,7 +22,7 @@ from PySide6.QtWidgets import (QAbstractScrollArea, QAbstractSpinBox, QApplicati
     QScrollArea, QSizePolicy, QSpinBox, QStatusBar,
     QTextEdit, QToolButton, QVBoxLayout, QWidget)
 
-from CustomTextEdit import CustomTextEdit
+from customtextedit import CustomTextEdit
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -34,63 +34,18 @@ class Ui_MainWindow(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(MainWindow.sizePolicy().hasHeightForWidth())
         MainWindow.setSizePolicy(sizePolicy)
-        self.action = QAction(MainWindow)
-        self.action.setObjectName(u"action")
-        self.action_2 = QAction(MainWindow)
-        self.action_2.setObjectName(u"action_2")
-        self.action_3 = QAction(MainWindow)
-        self.action_3.setObjectName(u"action_3")
+        self.createDocAction = QAction(MainWindow)
+        self.createDocAction.setObjectName(u"createDocAction")
+        self.imageAction = QAction(MainWindow)
+        self.imageAction.setObjectName(u"imageAction")
+        self.linkAction = QAction(MainWindow)
+        self.linkAction.setObjectName(u"linkAction")
         self.MainArea = QWidget(MainWindow)
         self.MainArea.setObjectName(u"MainArea")
         self.MainArea.setEnabled(True)
         self.gridLayout = QGridLayout(self.MainArea)
         self.gridLayout.setObjectName(u"gridLayout")
         self.gridLayout.setContentsMargins(9, -1, -1, -1)
-        self.DocumentArea = QScrollArea(self.MainArea)
-        self.DocumentArea.setObjectName(u"DocumentArea")
-        sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
-        sizePolicy1.setHorizontalStretch(0)
-        sizePolicy1.setVerticalStretch(0)
-        sizePolicy1.setHeightForWidth(self.DocumentArea.sizePolicy().hasHeightForWidth())
-        self.DocumentArea.setSizePolicy(sizePolicy1)
-        self.DocumentArea.setFrameShape(QFrame.Shape.NoFrame)
-        self.DocumentArea.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAsNeeded)
-        self.DocumentArea.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAsNeeded)
-        self.DocumentArea.setSizeAdjustPolicy(QAbstractScrollArea.SizeAdjustPolicy.AdjustIgnored)
-        self.DocumentArea.setWidgetResizable(True)
-        self.DocumentArea.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.DocumentContent = QWidget()
-        self.DocumentContent.setObjectName(u"DocumentContent")
-        self.DocumentContent.setGeometry(QRect(0, 0, 986, 1149))
-        sizePolicy1.setHeightForWidth(self.DocumentContent.sizePolicy().hasHeightForWidth())
-        self.DocumentContent.setSizePolicy(sizePolicy1)
-        self.gridLayout_2 = QGridLayout(self.DocumentContent)
-        self.gridLayout_2.setObjectName(u"gridLayout_2")
-        self.textEdit = CustomTextEdit(self.DocumentContent)
-        self.textEdit.setObjectName(u"textEdit")
-        sizePolicy2 = QSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
-        sizePolicy2.setHorizontalStretch(0)
-        sizePolicy2.setVerticalStretch(0)
-        sizePolicy2.setHeightForWidth(self.textEdit.sizePolicy().hasHeightForWidth())
-        self.textEdit.setSizePolicy(sizePolicy2)
-        self.textEdit.setMinimumSize(QSize(802, 1131))
-        font = QFont()
-        font.setFamilies([u"Times New Roman"])
-        font.setPointSize(12)
-        self.textEdit.setFont(font)
-        self.textEdit.setStyleSheet(u"border: 1px solid")
-        self.textEdit.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
-        self.textEdit.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAsNeeded)
-        self.textEdit.setSizeAdjustPolicy(QAbstractScrollArea.SizeAdjustPolicy.AdjustIgnored)
-        self.textEdit.setLineWrapMode(QTextEdit.LineWrapMode.FixedPixelWidth)
-        self.textEdit.setLineWrapColumnOrWidth(800)
-
-        self.gridLayout_2.addWidget(self.textEdit, 2, 0, 1, 1)
-
-        self.DocumentArea.setWidget(self.DocumentContent)
-
-        self.gridLayout.addWidget(self.DocumentArea, 1, 0, 1, 1)
-
         self.ToolPanel = QGridLayout()
         self.ToolPanel.setObjectName(u"ToolPanel")
         self.RandomBullshitLayout = QVBoxLayout()
@@ -171,6 +126,31 @@ class Ui_MainWindow(object):
 
         self.ToolPanel.addLayout(self.RandomBullshitLayout, 0, 3, 1, 1)
 
+        self.FontLayout = QHBoxLayout()
+        self.FontLayout.setObjectName(u"FontLayout")
+        self.FontBox = QFontComboBox(self.MainArea)
+        self.FontBox.setObjectName(u"FontBox")
+        self.FontBox.setWritingSystem(QFontDatabase.WritingSystem.Latin)
+        self.FontBox.setFontFilters(QFontComboBox.FontFilter.ScalableFonts)
+        font = QFont()
+        font.setFamilies([u"Times New Roman"])
+        font.setPointSize(12)
+        self.FontBox.setCurrentFont(font)
+
+        self.FontLayout.addWidget(self.FontBox)
+
+        self.FontSize = QSpinBox(self.MainArea)
+        self.FontSize.setObjectName(u"FontSize")
+        self.FontSize.setButtonSymbols(QAbstractSpinBox.ButtonSymbols.UpDownArrows)
+        self.FontSize.setMinimum(1)
+        self.FontSize.setMaximum(128)
+        self.FontSize.setValue(12)
+
+        self.FontLayout.addWidget(self.FontSize)
+
+
+        self.ToolPanel.addLayout(self.FontLayout, 0, 0, 1, 1)
+
         self.TextFormatLayout = QHBoxLayout()
         self.TextFormatLayout.setSpacing(10)
         self.TextFormatLayout.setObjectName(u"TextFormatLayout")
@@ -196,43 +176,72 @@ class Ui_MainWindow(object):
 
         self.TextFormatLayout.addWidget(self.UnderlineStyleButton)
 
+        self.clearButton = QPushButton(self.MainArea)
+        self.clearButton.setObjectName(u"clearButton")
+        icon9 = QIcon(QIcon.fromTheme(QIcon.ThemeIcon.EditClear))
+        self.clearButton.setIcon(icon9)
+
+        self.TextFormatLayout.addWidget(self.clearButton)
+
 
         self.ToolPanel.addLayout(self.TextFormatLayout, 0, 9, 1, 1)
-
-        self.FontLayout = QHBoxLayout()
-        self.FontLayout.setObjectName(u"FontLayout")
-        self.FontBox = QFontComboBox(self.MainArea)
-        self.FontBox.setObjectName(u"FontBox")
-        self.FontBox.setWritingSystem(QFontDatabase.WritingSystem.Latin)
-        self.FontBox.setFontFilters(QFontComboBox.FontFilter.ScalableFonts)
-        self.FontBox.setCurrentFont(font)
-
-        self.FontLayout.addWidget(self.FontBox)
-
-        self.FontSize = QSpinBox(self.MainArea)
-        self.FontSize.setObjectName(u"FontSize")
-        self.FontSize.setButtonSymbols(QAbstractSpinBox.ButtonSymbols.UpDownArrows)
-        self.FontSize.setMinimum(1)
-        self.FontSize.setMaximum(128)
-        self.FontSize.setValue(12)
-
-        self.FontLayout.addWidget(self.FontSize)
-
-
-        self.ToolPanel.addLayout(self.FontLayout, 0, 0, 1, 1)
 
 
         self.gridLayout.addLayout(self.ToolPanel, 0, 0, 1, 1)
 
+        self.DocumentArea = QScrollArea(self.MainArea)
+        self.DocumentArea.setObjectName(u"DocumentArea")
+        sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
+        sizePolicy1.setHorizontalStretch(0)
+        sizePolicy1.setVerticalStretch(0)
+        sizePolicy1.setHeightForWidth(self.DocumentArea.sizePolicy().hasHeightForWidth())
+        self.DocumentArea.setSizePolicy(sizePolicy1)
+        self.DocumentArea.setFrameShape(QFrame.Shape.NoFrame)
+        self.DocumentArea.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAsNeeded)
+        self.DocumentArea.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAsNeeded)
+        self.DocumentArea.setSizeAdjustPolicy(QAbstractScrollArea.SizeAdjustPolicy.AdjustIgnored)
+        self.DocumentArea.setWidgetResizable(True)
+        self.DocumentArea.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.DocumentContent = QWidget()
+        self.DocumentContent.setObjectName(u"DocumentContent")
+        self.DocumentContent.setGeometry(QRect(0, 0, 984, 1153))
+        sizePolicy1.setHeightForWidth(self.DocumentContent.sizePolicy().hasHeightForWidth())
+        self.DocumentContent.setSizePolicy(sizePolicy1)
+        self.gridLayout_2 = QGridLayout(self.DocumentContent)
+        self.gridLayout_2.setObjectName(u"gridLayout_2")
+        self.textEdit = CustomTextEdit(self.DocumentContent)
+        self.textEdit.setObjectName(u"textEdit")
+        sizePolicy2 = QSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
+        sizePolicy2.setHorizontalStretch(0)
+        sizePolicy2.setVerticalStretch(0)
+        sizePolicy2.setHeightForWidth(self.textEdit.sizePolicy().hasHeightForWidth())
+        self.textEdit.setSizePolicy(sizePolicy2)
+        self.textEdit.setMinimumSize(QSize(802, 1131))
+        self.textEdit.setFont(font)
+        self.textEdit.setStyleSheet(u"border: 1px solid")
+        self.textEdit.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.textEdit.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAsNeeded)
+        self.textEdit.setSizeAdjustPolicy(QAbstractScrollArea.SizeAdjustPolicy.AdjustIgnored)
+        self.textEdit.setLineWrapMode(QTextEdit.LineWrapMode.FixedPixelWidth)
+        self.textEdit.setLineWrapColumnOrWidth(800)
+
+        self.gridLayout_2.addWidget(self.textEdit, 2, 0, 1, 1)
+
+        self.DocumentArea.setWidget(self.DocumentContent)
+
+        self.gridLayout.addWidget(self.DocumentArea, 2, 0, 1, 1)
+
         MainWindow.setCentralWidget(self.MainArea)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 1021, 22))
+        self.menubar.setGeometry(QRect(0, 0, 1021, 26))
         self.menubar.setDefaultUp(False)
         self.menuTest = QMenu(self.menubar)
         self.menuTest.setObjectName(u"menuTest")
         self.menu = QMenu(self.menubar)
         self.menu.setObjectName(u"menu")
+        self.menu_2 = QMenu(self.menubar)
+        self.menu_2.setObjectName(u"menu_2")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QStatusBar(MainWindow)
         self.statusbar.setObjectName(u"statusbar")
@@ -240,9 +249,10 @@ class Ui_MainWindow(object):
 
         self.menubar.addAction(self.menuTest.menuAction())
         self.menubar.addAction(self.menu.menuAction())
-        self.menuTest.addAction(self.action)
-        self.menu.addAction(self.action_2)
-        self.menu.addAction(self.action_3)
+        self.menubar.addAction(self.menu_2.menuAction())
+        self.menuTest.addAction(self.createDocAction)
+        self.menu.addAction(self.imageAction)
+        self.menu.addAction(self.linkAction)
 
         self.retranslateUi(MainWindow)
 
@@ -251,17 +261,9 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"FEFU \u0421\u043b\u043e\u0432\u043e 2025", None))
-        self.action.setText(QCoreApplication.translate("MainWindow", u"\u0421\u043e\u0437\u0434\u0430\u0442\u044c \u043d\u043e\u0432\u044b\u0439 \u0424\u0430\u0439\u043b", None))
-        self.action_2.setText(QCoreApplication.translate("MainWindow", u"\u0412\u0441\u0442\u0430\u0432\u0438\u0442\u044c \u0418\u0437\u043e\u0431\u0440\u0430\u0436\u0435\u043d\u0438\u0435", None))
-        self.action_3.setText(QCoreApplication.translate("MainWindow", u"\u0412\u0441\u0442\u0430\u0432\u0438\u0442\u044c \u0421\u0441\u044b\u043b\u043a\u0443", None))
-        self.textEdit.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"hr { height: 1px; border-width: 0; }\n"
-"li.unchecked::marker { content: \"\\2610\"; }\n"
-"li.checked::marker { content: \"\\2612\"; }\n"
-"</style></head><body style=\" font-family:'Times New Roman'; font-size:12pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", None))
+        self.createDocAction.setText(QCoreApplication.translate("MainWindow", u"\u0421\u043e\u0437\u0434\u0430\u0442\u044c \u043d\u043e\u0432\u044b\u0439 \u0424\u0430\u0439\u043b", None))
+        self.imageAction.setText(QCoreApplication.translate("MainWindow", u"\u0412\u0441\u0442\u0430\u0432\u0438\u0442\u044c \u0418\u0437\u043e\u0431\u0440\u0430\u0436\u0435\u043d\u0438\u0435", None))
+        self.linkAction.setText(QCoreApplication.translate("MainWindow", u"\u0412\u0441\u0442\u0430\u0432\u0438\u0442\u044c \u0421\u0441\u044b\u043b\u043a\u0443", None))
         self.LinkButton.setText(QCoreApplication.translate("MainWindow", u"...", None))
         self.ImageButton.setText(QCoreApplication.translate("MainWindow", u"...", None))
         self.LAlignButton.setText(QCoreApplication.translate("MainWindow", u"...", None))
@@ -275,7 +277,17 @@ class Ui_MainWindow(object):
         self.BoldStyleButton.setText("")
         self.ItalicStyleButton.setText("")
         self.UnderlineStyleButton.setText("")
+        self.clearButton.setText("")
+        self.textEdit.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"hr { height: 1px; border-width: 0; }\n"
+"li.unchecked::marker { content: \"\\2610\"; }\n"
+"li.checked::marker { content: \"\\2612\"; }\n"
+"</style></head><body style=\" font-family:'Times New Roman'; font-size:12pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", None))
         self.menuTest.setTitle(QCoreApplication.translate("MainWindow", u"\u0424\u0430\u0439\u043b", None))
         self.menu.setTitle(QCoreApplication.translate("MainWindow", u"\u0412\u0441\u0442\u0430\u0432\u043a\u0430", None))
+        self.menu_2.setTitle(QCoreApplication.translate("MainWindow", u"\u0412\u0438\u0434", None))
     # retranslateUi
 
