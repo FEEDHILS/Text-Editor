@@ -1,12 +1,8 @@
 import sys
-from PySide6 import QtCore
 from PySide6.QtWidgets import *
-from views.ui_main import Ui_MainWindow 
-from textFormatting import *
-from textFont import *
-from ImageHandler import *
-from fileManipulations import *
 from PySide6.QtGui import *
+from views.ui_main import Ui_MainWindow 
+from utils import *
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -88,12 +84,6 @@ class MainWindow(QMainWindow):
             image_format.setName(file)
             self.ui.textEdit.textCursor().insertImage(image_format)
 
-
-
-        
-
-    def resizeEvent(self, event):
-        super().resizeEvent(event)
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
