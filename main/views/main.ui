@@ -333,6 +333,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
      <string>Файл</string>
     </property>
     <addaction name="createDocAction"/>
+    <addaction name="saveDocAction"/>
    </widget>
    <widget class="QMenu" name="menu">
     <property name="title">
@@ -364,6 +365,11 @@ li.checked::marker { content: &quot;\2612&quot;; }
   <action name="linkAction">
    <property name="text">
     <string>Вставить Ссылку</string>
+   </property>
+  </action>
+  <action name="saveDocAction">
+   <property name="text">
+    <string>Сохранить</string>
    </property>
   </action>
  </widget>

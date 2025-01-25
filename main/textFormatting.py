@@ -7,7 +7,7 @@ def align_left(textEdit):
     cursor = textEdit.textCursor()
     block_format = cursor.blockFormat()
     block_format.setAlignment(Qt.AlignLeft)
-    cursor.setBlockFormat(block_format)
+    cursor.mergeBlockFormat(block_format)
     textEdit.setTextCursor(cursor)
 
 def align_center(textEdit):
@@ -15,7 +15,7 @@ def align_center(textEdit):
     cursor = textEdit.textCursor()
     block_format = cursor.blockFormat()
     block_format.setAlignment(Qt.AlignCenter)
-    cursor.setBlockFormat(block_format)
+    cursor.mergeBlockFormat(block_format)
     textEdit.setTextCursor(cursor)
 
 def align_right(textEdit):
@@ -23,7 +23,7 @@ def align_right(textEdit):
     cursor = textEdit.textCursor()
     block_format = cursor.blockFormat()
     block_format.setAlignment(Qt.AlignRight)
-    cursor.setBlockFormat(block_format)
+    cursor.mergeBlockFormat(block_format)
     textEdit.setTextCursor(cursor)
 
 def align_justify(textEdit):
@@ -31,7 +31,7 @@ def align_justify(textEdit):
     cursor = textEdit.textCursor()
     block_format = cursor.blockFormat()
     block_format.setAlignment(Qt.AlignJustify)
-    cursor.setBlockFormat(block_format)
+    cursor.mergeBlockFormat(block_format)
     textEdit.setTextCursor(cursor)
 
 def set_margin(textEdit):
@@ -58,14 +58,14 @@ def set_margin(textEdit):
 
         if ok_value:
             cursor = textEdit.textCursor()
-            block_format = cursor.blockFormat()
+            block_format = QTextBlockFormat()
 
             if margin_type == "Левый отступ":
                 block_format.setLeftMargin(margin_value)
             elif margin_type == "Правый отступ":
                 block_format.setRightMargin(margin_value)
 
-            cursor.setBlockFormat(block_format)
+            cursor.mergeBlockFormat(block_format)
             textEdit.setTextCursor(cursor)
 
 def set_line_spacing(textEdit):
@@ -86,7 +86,7 @@ def set_line_spacing(textEdit):
         # Устанавливаем междустрочный интервал с типом LineDistanceHeight (3)
         block_format.setLineHeight(spacing * 100, 3)  # 3 соответствует LineDistanceHeight
         
-        cursor.setBlockFormat(block_format)
+        cursor.mergeBlockFormat(block_format)
         textEdit.setTextCursor(cursor)
 
 
@@ -155,7 +155,7 @@ def setItalic(textEdit):
     newFormat = cursor.charFormat()
     newFormat.setFontItalic( not newFormat.fontItalic() )
 
-    cursor.setCharFormat(newFormat)
+    cursor.mergeCharFormat(newFormat)
 
 def setUnderlined(textEdit):
     cursor = textEdit.textCursor()
