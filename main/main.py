@@ -5,7 +5,8 @@ from views.ui_main import Ui_MainWindow
 from textFormatting import *
 from textFont import *
 from ImageHandler import *
-from PySide6.QtGui import QAction
+from fileManipulations import *
+from PySide6.QtGui import *
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -16,6 +17,9 @@ class MainWindow(QMainWindow):
         self.ui.textEdit.setPlaceholderText("Здесь пустовато...")
         setSize(self.ui.textEdit, self.ui.FontSize.value())
         changeFont(self.ui.textEdit, self.ui.FontBox)
+        self.hasChanged = False
+        self.outputPath = None
+        self.ui.saveDocAction.setDisabled(True)
 
         # Всякие коннекты к функциям
         self.ui.BoldStyleButton.clicked.connect(lambda: setBold(self.ui.textEdit))
@@ -40,11 +44,43 @@ class MainWindow(QMainWindow):
 
         self.ui.imageAction.triggered.connect( self.loadImage )
         self.ui.linkAction.triggered.connect(lambda: setLink(self.ui.textEdit))
-        # cursor = self.ui.textEdit.textCursor()
-        # cursor.setCharFormat(previousFormat)
-        # self.ui.textEdit.setTextCursor( cursor )
+        self.ui.createDocAction.triggered.connect( self.newDocument )
+        self.ui.textEdit.textChanged.connect( self.OnChange )
+        self.ui.saveDocAction.triggered.connect( self.saveDocument )
+        self.ui.openDocAction.triggered.connect( self.openDocument )
+    
+    def newDocument(self):
+        self.ui.textEdit.clear()
+        self.hasChanged = False
+        self.outputPath = None
+        self.ui.saveDocAction.setDisabled(True)
+    
+    # Для Сохранения
+    def OnChange(self):
+        self.hasChanged = True
+        if len( self.ui.textEdit.toPlainText() ) != 0:
+            self.ui.saveDocAction.setDisabled(False)
+        else:
+            self.ui.saveDocAction.setDisabled(True)
+    
+    def saveDocument(self):
+        savePath, _ = QFileDialog.getSaveFileName(self, "Сохранить файл", "", "Текстовые файлы (*.txt);;Все файлы (*)")
+        if savePath:
+            with open(savePath, 'w', encoding='utf-8') as file:
+                file.write( self.ui.textEdit.toHtml() )
+                self.ui.saveDocAction.setDisabled(True)
+
+    # Для открытия
+    def openDocument(self):
+        loadPath, _ = QFileDialog.getOpenFileName(self, "Открыть файл", "", "Текстовые файлы (*.txt);;Все файлы (*)")
+        if loadPath:
+            self.newDocument()
+            with open(loadPath, 'r', encoding='utf-8') as file:
+                text = file.read()
+                self.ui.textEdit.setHtml( text )
 
 
+    # Загрузка изображений и их вставка
     def loadImage(self):
         file, _ = QFileDialog.getOpenFileName(self, "Select Image", '', "Images (*.png *.jpg *.bmp *.svg)")
         if file:

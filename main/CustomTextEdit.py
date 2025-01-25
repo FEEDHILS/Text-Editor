@@ -1,6 +1,7 @@
 from PySide6.QtWidgets import *
 from PySide6.QtGui import QAction, Qt, QDesktopServices
 from ImageHandler import ImageResizeDialog
+from textFormatting import setLink
 
 class CustomTextEdit(QTextEdit):
     def __init__(self, *args, **kwargs):
@@ -18,10 +19,12 @@ class CustomTextEdit(QTextEdit):
         if not self.format.isImageFormat() or self.cursor.selectionStart() == self.cursor.selectionEnd():
             ImageSizeOption.setDisabled(True)
 
-        # TODO: Доделать это дерьмо!!!
+
         InsertLinkOption = QAction("Вставить ссылку", self)
-        InsertLinkOption.triggered.connect(self.InsertLink)
-        InsertLinkOption.setDisabled(True)
+        InsertLinkOption.triggered.connect(lambda: setLink(self))
+        if self.format.isImageFormat() or self.cursor.selectionStart() == self.cursor.selectionEnd():
+            InsertLinkOption.setDisabled(True)
+        
 
         # Добавляем их в меню
         menu.addSeparator()  # Разделитель между стандартными и новыми опциями
@@ -40,9 +43,6 @@ class CustomTextEdit(QTextEdit):
             image.setWidth(width)
             image.setHeight(height)
             self.cursor.mergeCharFormat(image)
-
-    def InsertLink(self):
-        self.insertPlainText("Вы выбрали опцию 2!\n")
 
     # По умолчанию QTextEdit не поддерживает гиперссылки, поэтому далее идет немного кастомной реализации
 

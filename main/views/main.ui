@@ -334,6 +334,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
     </property>
     <addaction name="createDocAction"/>
     <addaction name="saveDocAction"/>
+    <addaction name="openDocAction"/>
    </widget>
    <widget class="QMenu" name="menu">
     <property name="title">
@@ -342,14 +343,8 @@ li.checked::marker { content: &quot;\2612&quot;; }
     <addaction name="imageAction"/>
     <addaction name="linkAction"/>
    </widget>
-   <widget class="QMenu" name="menu_2">
-    <property name="title">
-     <string>Вид</string>
-    </property>
-   </widget>
    <addaction name="menuTest"/>
    <addaction name="menu"/>
-   <addaction name="menu_2"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="createDocAction">
@@ -370,6 +365,11 @@ li.checked::marker { content: &quot;\2612&quot;; }
   <action name="saveDocAction">
    <property name="text">
     <string>Сохранить</string>
+   </property>
+  </action>
+  <action name="openDocAction">
+   <property name="text">
+    <string>Открыть Файл</string>
    </property>
   </action>
  </widget>

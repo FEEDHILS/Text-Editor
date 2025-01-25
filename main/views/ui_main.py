@@ -42,6 +42,8 @@ class Ui_MainWindow(object):
         self.linkAction.setObjectName(u"linkAction")
         self.saveDocAction = QAction(MainWindow)
         self.saveDocAction.setObjectName(u"saveDocAction")
+        self.openDocAction = QAction(MainWindow)
+        self.openDocAction.setObjectName(u"openDocAction")
         self.MainArea = QWidget(MainWindow)
         self.MainArea.setObjectName(u"MainArea")
         self.MainArea.setEnabled(True)
@@ -242,8 +244,6 @@ class Ui_MainWindow(object):
         self.menuTest.setObjectName(u"menuTest")
         self.menu = QMenu(self.menubar)
         self.menu.setObjectName(u"menu")
-        self.menu_2 = QMenu(self.menubar)
-        self.menu_2.setObjectName(u"menu_2")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QStatusBar(MainWindow)
         self.statusbar.setObjectName(u"statusbar")
@@ -251,9 +251,9 @@ class Ui_MainWindow(object):
 
         self.menubar.addAction(self.menuTest.menuAction())
         self.menubar.addAction(self.menu.menuAction())
-        self.menubar.addAction(self.menu_2.menuAction())
         self.menuTest.addAction(self.createDocAction)
         self.menuTest.addAction(self.saveDocAction)
+        self.menuTest.addAction(self.openDocAction)
         self.menu.addAction(self.imageAction)
         self.menu.addAction(self.linkAction)
 
@@ -268,6 +268,7 @@ class Ui_MainWindow(object):
         self.imageAction.setText(QCoreApplication.translate("MainWindow", u"\u0412\u0441\u0442\u0430\u0432\u0438\u0442\u044c \u0418\u0437\u043e\u0431\u0440\u0430\u0436\u0435\u043d\u0438\u0435", None))
         self.linkAction.setText(QCoreApplication.translate("MainWindow", u"\u0412\u0441\u0442\u0430\u0432\u0438\u0442\u044c \u0421\u0441\u044b\u043b\u043a\u0443", None))
         self.saveDocAction.setText(QCoreApplication.translate("MainWindow", u"\u0421\u043e\u0445\u0440\u0430\u043d\u0438\u0442\u044c", None))
+        self.openDocAction.setText(QCoreApplication.translate("MainWindow", u"\u041e\u0442\u043a\u0440\u044b\u0442\u044c \u0424\u0430\u0439\u043b", None))
         self.LinkButton.setText(QCoreApplication.translate("MainWindow", u"...", None))
         self.ImageButton.setText(QCoreApplication.translate("MainWindow", u"...", None))
         self.LAlignButton.setText(QCoreApplication.translate("MainWindow", u"...", None))
@@ -292,6 +293,5 @@ class Ui_MainWindow(object):
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", None))
         self.menuTest.setTitle(QCoreApplication.translate("MainWindow", u"\u0424\u0430\u0439\u043b", None))
         self.menu.setTitle(QCoreApplication.translate("MainWindow", u"\u0412\u0441\u0442\u0430\u0432\u043a\u0430", None))
-        self.menu_2.setTitle(QCoreApplication.translate("MainWindow", u"\u0412\u0438\u0434", None))
     # retranslateUi
 
