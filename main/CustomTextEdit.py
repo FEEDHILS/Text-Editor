@@ -1,6 +1,6 @@
 from PySide6.QtWidgets import *
 from PySide6.QtGui import QAction
-from imageHandler import ImageResizeDialog
+from ImageHandler import ImageResizeDialog
 
 class CustomTextEdit(QTextEdit):
     def __init__(self, *args, **kwargs):

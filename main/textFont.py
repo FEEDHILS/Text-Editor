@@ -1,4 +1,4 @@
-from PySide6.QtWidgets import QFontComboBox
+from PySide6.QtWidgets import QFontComboBox, QColorDialog
 from PySide6.QtGui import QTextCursor, QTextCharFormat, QTextImageFormat
 
 def changeFont(textEdit, fontBox):
@@ -42,3 +42,23 @@ def setSize(textEdit, size):
 #     format = cursor.charFormat()
 #     print(format.fontPointSize(), cursor.selectedText(), textEdit.font().pointSize())
 #     size.setValue( format.fontPointSize() )
+
+def change_text_color(textEdit):
+    # Изменение цвета текста
+    color = QColorDialog.getColor()
+    if color.isValid():
+        cursor = textEdit.textCursor()
+        if cursor.hasSelection():
+            fmt = QTextCharFormat()
+            fmt.setForeground(color)
+            cursor.mergeCharFormat(fmt)
+
+def change_background_color(textEdit):
+    # Изменение цвета фона текста
+    color = QColorDialog.getColor()
+    if color.isValid():
+        cursor = textEdit.textCursor()
+        if cursor.hasSelection():
+            fmt = QTextCharFormat()
+            fmt.setBackground(color)
+            cursor.mergeCharFormat(fmt)
